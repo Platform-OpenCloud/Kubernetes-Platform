@@ -1,5 +1,5 @@
 image:
-  repository: quay.io/rook/ceph
+  repository: docker.io/rook/ceph
   tag: v1.16.3
   pullPolicy: IfNotPresent
 
