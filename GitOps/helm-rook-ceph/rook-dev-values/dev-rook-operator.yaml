@@ -62,24 +62,24 @@ monitoring:
 #       hosts:
 #         - ceph-dashboard.example.com
 
-storage:   
-  useAllNodes: false
-  useAllDevices: false
-  nodes:
-    - name: project-worker-1
-      devices:
-        - name: "vdb"
-    - name: project-worker-2
-      devices:
-        - name: "vdb"
-        
-placement:
-  all:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: worker-ceph-cluster
-                operator: In
-                values:
-                  - "true"
+  # storage:   
+  #   useAllNodes: false
+  #   useAllDevices: false
+  #   nodes:
+  #     - name: project-worker-1
+  #       devices:
+  #         - name: "vdb"
+  #     - name: project-worker-2
+  #       devices:
+  #         - name: "vdb"
+          
+  # placement:
+  #   all:
+  #     nodeAffinity:
+  #       requiredDuringSchedulingIgnoredDuringExecution:
+  #         nodeSelectorTerms:
+  #           - matchExpressions:
+  #               - key: worker-ceph-cluster
+  #                 operator: In
+  #                 values:
+  #                   - "true"

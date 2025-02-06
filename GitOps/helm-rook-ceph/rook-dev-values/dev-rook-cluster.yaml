@@ -44,7 +44,7 @@ cephClusterSpec:
     allowMultiplePerNode: false
 
   mgr:
-   count: 2 # MGR 데몬의 개수 설정
+   count: 1 # MGR 데몬의 개수 설정
 
   dashboard:
     enabled: true
@@ -55,7 +55,16 @@ cephClusterSpec:
     metricsDisabled: true
 
   placement:
-    all:
+    mon:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: worker-ceph-cluster
+                  operator: In
+                  values:
+                    - "true"
+    osd:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
@@ -76,5 +85,5 @@ cephClusterSpec:
         devices:
           - name: "vdb"
 
-ingress:
-  enabled: false # Ingress는 추후 활성화 가능하도록 비활성화 상태 유지.
+# ingress:
+
