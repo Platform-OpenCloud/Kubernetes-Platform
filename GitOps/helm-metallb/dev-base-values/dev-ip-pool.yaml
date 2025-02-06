@@ -7,5 +7,5 @@ metadata:
 spec:
   addresses:
   # 사용할 ip address pool
-  - 10.0.0.70-10.0.0.80 
+  - 10.0.0.70-10.0.0.99
   autoAssign: true
