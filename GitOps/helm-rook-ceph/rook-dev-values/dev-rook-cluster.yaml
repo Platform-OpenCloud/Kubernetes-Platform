@@ -52,7 +52,18 @@ cephClusterSpec:
   monitoring:
     enabled: true
     metricsDisabled: true
-    
+
+  placement:
+    all:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: worker-ceph-cluster
+                  operator: In
+                  values:
+                    - "true"
+
   storage:   
     useAllNodes: false
     useAllDevices: false
