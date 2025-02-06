@@ -1,0 +1,29 @@
+cephClusterSpec:
+  dataDirHostPath: /var/lib/rook # Ceph 데이터를 저장할 경로
+  mon:
+    count: 2 # MON 데몬의 개수 설정
+
+  dashboard:
+    enabled: true
+    ssl: false
+
+  monitoring:
+    enabled: true
+    metricsDisabled: false
+    
+  storage:   
+    useAllNodes: false
+    useAllDevices: false
+    nodes:
+      - name: project-worker-1
+        devices:
+          - name: "vdb"
+      - name: project-worker-2
+        devices:
+          - name: "vdb"
+
+toolbox:
+  enabled: true # 디버깅용 Toolbox Pod 활성화 여부
+
+ingress:
+  enabled: false # Ingress는 추후 활성화 가능하도록 비활성화 상태 유지.

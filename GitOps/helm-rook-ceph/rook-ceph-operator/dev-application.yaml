@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rook-operator
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rook-ceph
+  # 두 소스를 명시하는 부분
+  sources:
+    # 1) Rook Helm 차트 소스
+    - repoURL: https://charts.rook.io/release
+      chart: rook-ceph
+      targetRevision: "v1.16.2" 
+      helm:
+        releaseName: rook-ceph-operator
+        # values 파일 경로 앞에 $values 접두어 사용 (리포지토리 루트를 기준으로 함)
+        valueFiles:
+          - "$values/GitOps/helm-rook-ceph/rook-dev-values/dev-rook-operator.yaml"
+    # 2) 커스텀 values 파일을 관리하는 Git 저장소
+    - repoURL: https://github.com/Cloud-Web-Platform/Atlas-PlayGround.git
+      targetRevision: develop
+      ref: values
+  syncPolicy:
+    syncOptions:
+    - ServerSideApply=true
+    automated:
+      prune: true
+      selfHeal: true

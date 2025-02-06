@@ -1,0 +1,5 @@
+## Server
+server:
+  service:
+    type: NodePort
+    nodePortHttps: 30002

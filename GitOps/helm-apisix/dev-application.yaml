@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apisix-deployment
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ingress-apisix
+  sources:
+    - repoURL: https://charts.apiseven.com
+      chart: apisix
+      targetRevision: 3.5.0 # APISIX 버전
+      helm:
+        valueFiles:
+          - values/apisix-values.yaml # 커스텀 values 파일 경로
+    - repoURL: https://charts.apiseven.com
+      chart: apisix-ingress-controller
+      targetRevision: 1.7.0 # Ingress Controller 버전
+      helm:
+        valueFiles:
+          - values/ingress-values.yaml
+    - repoURL: https://github.com/apache/apisix-dashboard-helm-chart.git
+      chart: apisix-dashboard
+      targetRevision: latest # Dashboard 버전
+      helm:
+        valueFiles:
+          - values/dashboard-values.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

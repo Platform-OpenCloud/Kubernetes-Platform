@@ -1,0 +1,25 @@
+prometheus:
+  prometheusSpec:
+    webSpec:
+      tlsConfig:
+        insecureSkipVerify: true
+
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorNamespaceSelector: {}
+      # matchExpressions:
+      #   - key: rook-ceph
+      #     operator: In
+      #     values: ["enabled"]
+      #   - key: name
+      #     operator: In
+      #     values: ["system-monitoring"]
+
+  service:
+    type: NodePort
+    nodePort: 30090
+
+prometheusOperator:
+  admissionWebhooks:
+    failurePolicy: Ignore
+  tls:
+    enabled: false

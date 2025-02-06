@@ -1,0 +1,5 @@
+dashboard:
+  service:
+    type: ClusterIP # 내부 접근용 서비스 타입 설정 (LoadBalancer로 변경 가능)
+apisix:
+  base_url: "http://apisix-admin.ingress-apisix.svc.cluster.local:9180/apisix/admin"

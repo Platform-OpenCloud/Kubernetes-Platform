@@ -1,0 +1,79 @@
+image:
+  repository: rook/ceph
+  tag: v1.16.2
+  pullPolicy: IfNotPresent
+
+crds:
+  enabled: true
+
+resources:
+  limits:
+    memory: "512Mi"
+  requests:
+    cpu: "200m"
+    memory: "128Mi"
+
+# nodeSelector:
+#   disktype: ssd
+
+csi:
+  enableRbdDriver: true
+  enableCephfsDriver: false
+
+monitoring:
+  enabled: true        
+  createPrometheusRules: true       # 모니터링 기능을 활성화
+  # serviceMonitor:
+  #   enabled: true             # ServiceMonitor 리소스도 자동 생성
+  #   namespace: rook-ceph      # Rook이 배포된 네임스페이스 (Prometheus Operator의 네임스페이스 셀렉터와 일치시켜야 함)
+  #   labels:
+  #     rook-ceph: "enabled"    # Prometheus Operator의 serviceMonitorNamespaceSelector와 매칭되는 라벨
+
+# ingress:
+#   # Ingress를 위한 기본 틀만 추가 (추후 세부 설정 필요)
+#   dashboard:
+#     enabled: false
+#     annotations: {}
+#     hosts:
+#       - rook-ceph-dashboard.local
+#     tls: []
+  
+# ## 대시보드 구성
+# dashboard:
+#   enabled: true
+#   ssl: true
+#   port: 8443
+#   # Ingress 설정 예시 (nginx 기준)
+#   ingress:
+#     enabled: true
+#     annotations:
+#       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+#       cert-manager.io/cluster-issuer: "letsencrypt-prod"
+#     hosts:
+#       - ceph-dashboard.example.com
+#     tls:
+#     - secretName: ceph-dashboard-tls
+#       hosts:
+#         - ceph-dashboard.example.com
+
+storage:   
+  useAllNodes: false
+  useAllDevices: false
+  nodes:
+    - name: project-worker-1
+      devices:
+        - name: "vdb"
+    - name: project-worker-2
+      devices:
+        - name: "vdb"
+        
+placement:
+  all:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: worker-ceph-cluster
+                operator: In
+                values:
+                  - "true"

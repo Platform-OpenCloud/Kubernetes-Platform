@@ -1,0 +1,8 @@
+config:
+  argocd:
+    serverAddress: "https://argo-cd-argocd-server"
+
+  registries:
+    - name: Docker Hub
+      api_url: https://registry-1.docker.io
+      credentials: pullsecret:argocd/docker-credentials

@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb-argo
+  namespace: argocd
+spec:
+  project: default
+  sources:
+  - repoURL: https://metallb.github.io/metallb
+    chart: metallb
+    targetRevision: 0.14.9
+    helm:
+      valueFiles:
+      - $values/GitOps/helm-metallb/dev-base-values/dev-ip-pool.yaml
+      - $values/GitOps/helm-metallb/dev-base-values/dev-l2-advert.yaml
+      releaseName: metallb-dev
+  - repoURL: https://github.com/Cloud-Web-Platform/Atlas-PlayGround
+    targetRevision: develop
+    ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: metallb-system
+  syncPolicy:
+    syncOptions:
+    - ServerSideApply=true
+    automated:
+      prune: true
+      selfHeal: true
