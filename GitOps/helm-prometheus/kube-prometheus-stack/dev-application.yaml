@@ -14,7 +14,7 @@ spec:
       - $values/GitOps/helm-prometheus/kube-prometheus-stack/dev-base-values/prometheus-values.yaml
       - $values/GitOps/helm-prometheus/kube-prometheus-stack/dev-base-values/grafana-values.yaml
       - $values/GitOps/helm-prometheus/kube-prometheus-stack/dev-base-values/alertmanager-values.yaml
-  - repoURL: https://github.com/Cloud-Web-Platform/Atlas-PlayGround
+  - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
     targetRevision: develop
     ref: values
   destination:

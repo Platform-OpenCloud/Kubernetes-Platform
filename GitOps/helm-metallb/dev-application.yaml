@@ -14,7 +14,7 @@ spec:
       - $values/GitOps/helm-metallb/dev-base-values/dev-ip-pool.yaml
       - $values/GitOps/helm-metallb/dev-base-values/dev-l2-advert.yaml
       releaseName: metallb-dev
-  - repoURL: https://github.com/Cloud-Web-Platform/Atlas-PlayGround
+  - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
     targetRevision: develop
     ref: values
   destination:
