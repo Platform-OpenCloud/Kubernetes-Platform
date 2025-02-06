@@ -19,12 +19,20 @@ resources:
 csi:
   enableRbdDriver: true
   enableCephfsDriver: true
+
   serviceMonitor:
+    # -- Enable ServiceMonitor for Ceph CSI drivers
     enabled: true
+    # -- Service monitor scrape interval
     interval: 10s
+    # -- ServiceMonitor additional labels
+    labels: {}
+    # -- Use a different namespace for the ServiceMonitor
     namespace: rook-ceph
 
 monitoring:
+  # -- Enable monitoring. Requires Prometheus to be pre-installed.
+  # Enabling will also create RBAC rules to allow Operator to create ServiceMonitors
   enabled: true        
 
 # ingress:

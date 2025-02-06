@@ -1,7 +1,49 @@
+toolbox:
+  enabled: true # 디버깅용 Toolbox Pod 활성화 여부
+  image: quay.io/ceph/ceph:v19.2.0
+  resources:
+    limits:
+      memory: "500Mi"
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+
+monitoring:
+  # -- Enable Prometheus integration, will also create necessary RBAC rules to allow Operator to create ServiceMonitors.
+  # Monitoring requires Prometheus to be pre-installed
+  enabled: true
+  # -- Whether to disable the metrics reported by Ceph. If false, the prometheus mgr module and Ceph exporter are enabled
+  metricsDisabled: true
+  # -- Whether to create the Prometheus rules for Ceph alerts
+  createPrometheusRules: true
+  # -- The namespace in which to create the prometheus rules, if different from the rook cluster namespace.
+  # If you have multiple rook-ceph clusters in the same k8s cluster, choose the same namespace (ideally, namespace with prometheus
+  # deployed) to set rulesNamespaceOverride for all the clusters. Otherwise, you will get duplicate alerts with multiple alert definitions.
+  prometheusRule:
+    # -- Labels applied to PrometheusRule
+    labels: {}
+    # -- Annotations applied to PrometheusRule
+    annotations: {}
+
 cephClusterSpec:
+  cephVersion:
+    # The container image used to launch the Ceph daemon pods (mon, mgr, osd, mds, rgw).
+    # v18 is Reef, v19 is Squid
+    # RECOMMENDATION: In production, use a specific version tag instead of the general v18 flag, which pulls the latest release and could result in different
+    # versions running within the cluster. See tags available at https://hub.docker.com/r/ceph/ceph/tags/.
+    # If you want to be more precise, you can always use a timestamp tag such as quay.io/ceph/ceph:v19.2.0-20240927
+    # This tag might not contain a new Ceph version, just security fixes from the underlying operating system, which will reduce vulnerabilities
+    image: quay.io/ceph/ceph:v19.2.0
+  # The path on the host where configuration files will be persisted. Must be specified. If there are multiple clusters, the directory must be unique for each cluster.
+  # Important: if you reinstall the cluster, make sure you delete this directory from each host or else the mons will fail to start on the new cluster.
+  # In Minikube, the '/data' directory is configured to persist across reboots. Use "/data/rook" in Minikube environment.
   dataDirHostPath: /var/lib/rook # Ceph 데이터를 저장할 경로
+
   mon:
     count: 2 # MON 데몬의 개수 설정
+
+  mgr:
+   count: 2 # MGR 데몬의 개수 설정
 
   dashboard:
     enabled: true
@@ -9,7 +51,7 @@ cephClusterSpec:
 
   monitoring:
     enabled: true
-    metricsDisabled: false
+    metricsDisabled: true
     
   storage:   
     useAllNodes: false
@@ -21,9 +63,6 @@ cephClusterSpec:
       - name: project-worker-2
         devices:
           - name: "vdb"
-
-toolbox:
-  enabled: true # 디버깅용 Toolbox Pod 활성화 여부
 
 ingress:
   enabled: false # Ingress는 추후 활성화 가능하도록 비활성화 상태 유지.

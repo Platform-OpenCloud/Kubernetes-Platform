@@ -11,16 +11,18 @@ spec:
   sources:
     - repoURL: https://charts.rook.io/release # 외부 Helm Chart Repository
       chart: rook-ceph-cluster
-      targetRevision: v1.16.2
+      targetRevision: v1.16.3
       helm:
         valueFiles:
           - $values/GitOps/helm-rook-ceph/rook-dev-values/dev-rook-cluster.yaml # Git에서 가져온 values 파일 참조
 
-    - repoURL: https://github.com/Cloud-Web-Platform/Atlas-PlayGround.git
+    - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
       targetRevision: develop
       ref: values # Helm valueFiles에서 참조할 변수 이름
-
+      
   syncPolicy:
+    syncOptions:
+    - ServerSideApply=true
     automated:
       prune: true
       selfHeal: true
