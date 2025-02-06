@@ -20,8 +20,7 @@ spec:
         valueFiles:
           - "$values/GitOps/helm-rook-ceph/rook-dev-values/dev-rook-operator.yaml"
     # 2) 커스텀 values 파일을 관리하는 Git 저장소
-    - repoURL: https://github.com/Cloud-Web-Platform/Atlas-PlayGround.git
-      targetRevision: develop
+    - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
       ref: values
   syncPolicy:
     syncOptions:
