@@ -18,20 +18,14 @@ resources:
 
 csi:
   enableRbdDriver: true
-  enableCephfsDriver: false
+  enableCephfsDriver: true
   serviceMonitor:
     enabled: true
-    namespace: rook-ceph
     interval: 10s
+    namespace: rook-ceph
 
 monitoring:
   enabled: true        
-  createPrometheusRules: true       # 모니터링 기능을 활성화
-  # serviceMonitor:
-  #   enabled: true             # ServiceMonitor 리소스도 자동 생성
-  #   namespace: rook-ceph      # Rook이 배포된 네임스페이스 (Prometheus Operator의 네임스페이스 셀렉터와 일치시켜야 함)
-  #   labels:
-  #     rook-ceph: "enabled"    # Prometheus Operator의 serviceMonitorNamespaceSelector와 매칭되는 라벨
 
 # ingress:
 #   # Ingress를 위한 기본 틀만 추가 (추후 세부 설정 필요)
