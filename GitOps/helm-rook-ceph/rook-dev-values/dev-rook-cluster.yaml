@@ -63,7 +63,9 @@ cephClusterSpec:
       requests:
         cpu: "200m"
         memory: "2Gi"
-
+  network:
+    provider: host  # 네트워크 모드 (host/calico/cilium)
+    
   dashboard:
     enabled: true
     ssl: false
