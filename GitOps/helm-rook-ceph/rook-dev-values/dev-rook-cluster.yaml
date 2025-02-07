@@ -38,7 +38,7 @@ cephClusterSpec:
   dataDirHostPath: /var/lib/rook # Ceph 데이터를 저장할 경로
 
   mon:
-    count: 2 # MON 데몬의 개수 설정
+    count: 3 # MON 데몬의 개수 설정
     allowMultiplePerNode: true
 
   mgr:
@@ -63,8 +63,8 @@ cephClusterSpec:
       requests:
         cpu: "200m"
         memory: "2Gi"
-  network:
-    provider: host  # 네트워크 모드 (host/calico/cilium)
+  # network:
+  #   provider: host  # 네트워크 모드 (host/calico/cilium)
     
   dashboard:
     enabled: true
@@ -102,6 +102,9 @@ cephClusterSpec:
         devices:
           - name: "vdb"
       - name: project-worker-2
+        devices:
+          - name: "vdb"
+      - name: project-worker-3
         devices:
           - name: "vdb"
 

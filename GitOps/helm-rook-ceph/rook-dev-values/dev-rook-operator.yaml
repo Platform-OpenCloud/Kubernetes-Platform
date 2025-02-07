@@ -72,6 +72,9 @@ monitoring:
       - name: project-worker-2
         devices:
           - name: "vdb"
+      - name: project-worker-3
+        devices:
+          - name: "vdb"
           
   placement:
     all:
