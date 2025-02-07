@@ -23,6 +23,7 @@ spec:
   syncPolicy:
     syncOptions:
     - ServerSideApply=true
+    - preserveResourcesOnDeletion=false
     automated:
       prune: true
       selfHeal: true

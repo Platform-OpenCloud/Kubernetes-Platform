@@ -13,7 +13,7 @@ monitoring:
   # Monitoring requires Prometheus to be pre-installed
   enabled: true
   # -- Whether to disable the metrics reported by Ceph. If false, the prometheus mgr module and Ceph exporter are enabled
-  metricsDisabled: true
+  metricsDisabled: false
   # -- Whether to create the Prometheus rules for Ceph alerts
   createPrometheusRules: true
   # -- The namespace in which to create the prometheus rules, if different from the rook cluster namespace.
