@@ -36,7 +36,6 @@ cephClusterSpec:
     image: quay.io/ceph/ceph:v19.2.0
   # The path on the host where configuration files will be persisted. Must be specified. If there are multiple clusters, the directory must be unique for each cluster.
   # Important: if you reinstall the cluster, make sure you delete this directory from each host or else the mons will fail to start on the new cluster.
-  # In Minikube, the '/data' directory is configured to persist across reboots. Use "/data/rook" in Minikube environment.
   dataDirHostPath: /var/lib/rook # Ceph 데이터를 저장할 경로
 
   mon:
