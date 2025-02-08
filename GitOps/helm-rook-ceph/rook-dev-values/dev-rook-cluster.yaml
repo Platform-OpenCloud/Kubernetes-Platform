@@ -96,7 +96,7 @@ cephClusterSpec:
 
   storage:   
     useAllNodes: false
-    useAllDevices: false
+    useAllDevices: true
     nodes:
       - name: project-worker-1
         devices:
