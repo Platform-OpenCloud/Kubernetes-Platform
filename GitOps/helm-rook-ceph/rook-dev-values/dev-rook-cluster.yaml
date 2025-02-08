@@ -43,11 +43,11 @@ cephClusterSpec:
 
   mgr:
    count: 2 # MGR 데몬의 개수 설정
-   allowMultiplePerNode: false
+   allowMultiplePerNode: true
 
   dashboard:
     enabled: true
-    ssl: true
+    ssl: false
 
   network:
     provider: host  # 네트워크 모드 (host/calico/cilium)
