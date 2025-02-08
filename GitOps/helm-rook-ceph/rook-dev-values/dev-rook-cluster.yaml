@@ -68,7 +68,7 @@ cephClusterSpec:
     
   dashboard:
     enabled: true
-    ssl: false
+    ssl: true
 
   monitoring:
     enabled: true
