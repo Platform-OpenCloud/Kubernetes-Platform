@@ -42,37 +42,33 @@ cephClusterSpec:
     allowMultiplePerNode: true
 
   mgr:
-   count: 1 # MGR 데몬의 개수 설정
+   count: 2 # MGR 데몬의 개수 설정
+   allowMultiplePerNode: false
 
-  resources:
-    mgr:
-      limits:
-        memory: "1Gi"
-      requests:
-        cpu: "200m"
-        memory: "512Mi"
-    mon:
-      limits:
-        memory: "2Gi"
-      requests:
-        cpu: "200m"
-        memory: "1Gi"
-    osd:
-      limits:
-        memory: "2Gi"
-      requests:
-        cpu: "200m"
-        memory: "2Gi"
-  network:
-    provider: host  # 네트워크 모드 (host/calico/cilium)
-    
   dashboard:
     enabled: true
     ssl: true
 
-  monitoring:
-    enabled: true
-    metricsDisabled: false
+  network:
+    provider: host  # 네트워크 모드 (host/calico/cilium)
+
+  cleanupPolicy:
+    # Since cluster cleanup is destructive to data, confirmation is required.
+    # To destroy all Rook data on hosts during uninstall, confirmation must be set to "yes-really-destroy-data".
+    # This value should only be set when the cluster is about to be deleted. After the confirmation is set,
+    # Rook will immediately stop configuring the cluster and only wait for the delete command.
+    # If the empty string is set, Rook will not destroy any data on hosts during uninstall.
+    confirmation: ""
+    # sanitizeDisks represents settings for sanitizing OSD disks on cluster deletion
+    sanitizeDisks:
+      # method indicates if the entire disk should be sanitized or simply ceph's metadata
+      # in both case, re-install is possible
+      # possible choices are 'complete' or 'quick' (default)
+      method: quick
+      # dataSource indicate where to get random bytes from to write on the disk
+      # possible choices are 'zero' (default) or 'random'
+      # using random sources will consume entropy from the system and will take much more time then the zero source
+      dataSource: zero
 
   placement:
     mon:
@@ -93,6 +89,26 @@ cephClusterSpec:
                   operator: In
                   values:
                     - "true"
+
+  resources:
+    mgr:
+      limits:
+        memory: "1Gi"
+      requests:
+        cpu: "200m"
+        memory: "512Mi"
+    mon:
+      limits:
+        memory: "2Gi"
+      requests:
+        cpu: "200m"
+        memory: "1Gi"
+    osd:
+      limits:
+        memory: "2Gi"
+      requests:
+        cpu: "200m"
+        memory: "2Gi"
 
   storage:   
     useAllNodes: false
