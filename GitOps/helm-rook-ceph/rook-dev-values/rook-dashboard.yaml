@@ -9,9 +9,9 @@ metadata:
 spec:
   ports:
     - name: dashboard
-      port: 8443        # Ceph Dashboard 기본 포트
+      port: 7000        # Ceph Dashboard 기본 포트
       protocol: TCP
-      targetPort: 8443
+      targetPort: 7000
       nodePort: 30010
   selector:
     app: rook-ceph-mgr
