@@ -11,7 +11,7 @@ spec:
       targetRevision: v1.8.0
       helm:
         valueFiles:
-          - $values/dev-values.yaml
+          - $values/GitOps/helm-longhorn/dev-base-values/dev-values.yaml
 
     - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
       targetRevision: develop
