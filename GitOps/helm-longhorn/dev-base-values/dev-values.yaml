@@ -1,0 +1,37 @@
+# Setting that allows Longhorn to perform pre-upgrade checks. Disable this setting when installing Longhorn using Argo CD or other GitOps solutions.
+# 동시 자원 생성 충돌 회피: ArgoCD sync 과정에서 사전 점검 Job과 Longhorn 시스템 자원이 동시에 생성될 때 발생하는 의존성 문제 해결
+# ArgoCD와 같은 GitOps 도구를 사용할 때 특히 중요
+preUpgradeChecker:
+  jobEnabled: false # ArgoCD Sync 시 사전 검증 Job 충돌 방지
+
+service:
+  ui:
+    type: NodePort
+    nodePort: 30050  # 수동 포트 지정
+  manager:
+    type: ClusterIP  # 필수 유지
+
+persistence:
+  defaultClass: true
+  # Longhorn 볼륨은 가상 블록 디바이스 상에 생성되므로 노드의 기본 파일시스템과 완전히 분리되어 동작
+  defaultFsType: ext4
+  defaultClassReplicaCount: 2
+  reclaimPolicy: Delete  # PV 정책 설정
+
+defaultSettings:
+  allowRecurringJobWhileVolumeDetached: false
+  defaultDataPath: /var/lib/longhorn
+  defaultDataLocality: "best-effort"
+
+# defaultBackupStore:
+#   # -- Endpoint used to access the default backupstore. (Options: "NFS", "CIFS", "AWS", "GCP", "AZURE")
+#   backupTarget: ~
+#   # -- Name of the Kubernetes secret associated with the default backup target.
+#   backupTargetCredentialSecret: ~
+#   # -- Number of seconds that Longhorn waits before checking the default backupstore for new backups. The default value is "300". When the value is "0", polling is disabled.
+#   pollInterval: ~
+
+metrics:
+  serviceMonitor:
+    # -- Setting that allows the creation of a Prometheus ServiceMonitor resource for Longhorn Manager components.
+    enabled: enable

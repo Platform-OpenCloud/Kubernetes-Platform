@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://charts.longhorn.io/
+      chart: longhorn
+      targetRevision: v1.8.0
+      helm:
+        valueFiles:
+          - $values/dev-values.yaml
+
+    - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
+      targetRevision: develop
+      ref: values
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: longhorn-system
+
+  syncPolicy:
+    syncOptions:
+    - ServerSideApply=true

@@ -27,3 +27,13 @@ kubectl create secret docker-registry docker-credentials \
   --docker-password=password \
   -n argocd
 ```
+
+## Longhorn
+
+- Containerd Config 변경
+- /etc/containerd/config.toml
+```bash
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+  SystemdCgroup = true
+  MountPropagation = "rshared"
+```
