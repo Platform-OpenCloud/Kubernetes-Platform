@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apisix-deployment
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ingress-apisix
+  sources:
+    # 1. APISIX Core (etcd 비활성화 및 standalone 모드 설정은 values 파일에서 처리)
+    - repoURL: https://charts.apiseven.com
+      chart: apisix
+      targetRevision: 3.11.0 # APISIX 버전
+      helm:
+        valueFiles:
+          - $values/GitOps/helm-apisix/values/apisix.yaml # 커스텀 values 파일 경로
+          - $values/GitOps/helm-apisix/values/dev/dev-apisix.yaml
+    # 2. APISIX Ingress Controller
+    - repoURL: https://charts.apiseven.com
+      chart: apisix-ingress-controller
+      targetRevision: 1.8.0 # Ingress Controller 버전
+      helm:
+        valueFiles:
+          - values/GitOps/helm-apisix/values/ingress.yaml
+          - values/GitOps/helm-apisix/values/dev/dev-ingress.yaml
+    - repoURL: https://charts.apiseven.com
+      chart: apisix-dashboard
+      targetRevision: 3.0.0 # Dashboard 버전
+      helm:
+        valueFiles:
+          - $values/GitOps/helm-apisix/values/dashboard.yaml
+          - $values/GitOps/helm-apisix/values/dev/dev-dashboard.yaml
+
+    - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform.git
+      targetRevision: develop
+      ref: values
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true

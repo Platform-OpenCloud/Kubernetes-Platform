@@ -1,6 +1,0 @@
-gateway:
-  type: LoadBalancer # 외부 트래픽 노출 방식 설정 (NodePort 또는 LoadBalancer)
-etcd:
-  enabled: true # etcd 활성화 (필수)
-  endpoints:
-    - http://etcd.ingress-apisix.svc.cluster.local:2379

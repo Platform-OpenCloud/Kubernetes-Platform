@@ -1,0 +1,54 @@
+replicaCount: 3
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+timezone: "Asia/Seoul"
+
+metrics:
+  serviceMonitor:
+    # -- Enable or disable Apache APISIX serviceMonitor
+    enabled: true
+    # -- namespace where the serviceMonitor is deployed, by default, it is the same as the namespace of the apisix
+    namespace: ""
+
+apisix:
+  deployment:
+    mode: standalone # etcd 없이 standalone 모드 사용 (또는 필요 시 traditional 모드로 전환)
+  admin:
+    enabled: true
+    ip: 0.0.0.0
+    # -- which port to use for Apache APISIX admin API
+    port: 9180
+    # -- Service port to use for Apache APISIX admin API
+    servicePort: 9180
+    cors: true
+    ingress:
+      enabled: true
+      hosts:
+        - host: apisix-admin.example.com
+          paths:
+            - "/apisix"
+
+service:
+  type: LoadBalancer # 클라우드 환경 등 외부 로드밸런서 사용
+  http:
+    servicePort: 80
+    containerPort: 9080
+  tls:
+    servicePort: 443
+
+ingress:
+  enabled: true
+  hosts:
+    - host: apisix.example.com
+      paths:
+        - "/"
+  tls:
+    - hosts:
+        - apisix.example.com
+      secretName: apisix-tls

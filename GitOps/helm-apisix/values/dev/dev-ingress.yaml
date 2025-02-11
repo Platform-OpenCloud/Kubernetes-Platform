@@ -1,0 +1,6 @@
+ingress-controller:
+  enabled: true
+  replicaCount: 2
+  config:
+    kubernetes:
+      watchNamespace: ""   # 모든 네임스페이스 감시

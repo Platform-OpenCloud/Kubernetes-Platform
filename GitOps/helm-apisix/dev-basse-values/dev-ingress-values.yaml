@@ -1,5 +1,0 @@
-ingressController:
-  enabled: true
-  config:
-    apisix:
-      serviceNamespace: ingress-apisix # APISIX 네임스페이스 설정

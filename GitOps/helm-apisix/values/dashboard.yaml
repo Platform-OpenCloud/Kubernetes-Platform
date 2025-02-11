@@ -1,0 +1,6 @@
+dashboard:
+  enabled: true            # 간단한 UI 테스트를 위해 활성화
+  service:
+    type: NodePort
+  ingress:
+    enabled: false         # 외부 접근은 필요시 수동으로 설정

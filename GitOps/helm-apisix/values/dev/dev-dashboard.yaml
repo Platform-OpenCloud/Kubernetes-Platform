@@ -1,0 +1,14 @@
+dashboard:
+  enabled: true
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: true
+    hosts:
+      - host: dashboard.example.com
+        paths:
+          - "/"
+    tls:
+      - hosts:
+          - dashboard.example.com
+        secretName: dashboard-tls
