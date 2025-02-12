@@ -61,3 +61,7 @@ ingress:
     - hosts:
         - apisix.example.com
       secretName: apisix-tls
+
+etcd:
+  # -- install etcd(v3) by default, set false if do not want to install etcd(v3) together
+  enabled: false
