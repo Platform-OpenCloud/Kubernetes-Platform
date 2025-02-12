@@ -12,7 +12,7 @@ spec:
     # 1. APISIX Core (etcd 비활성화 및 standalone 모드 설정은 values 파일에서 처리)
     - repoURL: https://charts.apiseven.com
       chart: apisix
-      targetRevision: 3.11.0 # APISIX Chart 버전
+      targetRevision: 2.10.0 # APISIX Chart 버전
       helm:
         valueFiles:
           - $values/GitOps/helm-apisix/values/apisix.yaml # 커스텀 values 파일 경로
@@ -20,14 +20,14 @@ spec:
     # 2. APISIX Ingress Controller
     - repoURL: https://charts.apiseven.com
       chart: apisix-ingress-controller
-      targetRevision: 1.8.0 # Ingress Controller 버전
+      targetRevision: 1.14.0 # Ingress Controller Chart 버전
       helm:
         valueFiles:
           - values/GitOps/helm-apisix/values/ingress.yaml
           - values/GitOps/helm-apisix/values/dev/dev-ingress.yaml
     - repoURL: https://charts.apiseven.com
       chart: apisix-dashboard
-      targetRevision: 3.0.0 # Dashboard 버전
+      targetRevision: 0.8.2 # Dashboard Chart 버전
       helm:
         valueFiles:
           - $values/GitOps/helm-apisix/values/dashboard.yaml
