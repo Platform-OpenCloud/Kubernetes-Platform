@@ -1,6 +1,32 @@
-ingress-controller:
-  enabled: true
-  replicaCount: 2
-  config:
-    kubernetes:
-      watchNamespace: ""   # 모든 네임스페이스 감시
+rbac:
+  # -- Specifies whether RBAC resources should be created
+  create: true
+
+replicaCount: 1
+
+image:
+  repository: apache/apisix-ingress-controller
+  pullPolicy: IfNotPresent
+  tag: "1.8.0"
+
+config:
+  apisix:
+    serviceName: apisix-admin
+    serviceNamespace: ingress-apisix
+    servicePort: 9180
+    adminKey: "edd1c9f034335f136f87ad84b625c8f1"
+    adminAPIVersion: "v3"
+
+serviceMonitor:
+  enabled: false
+  namespace: "system-monitoring"
+  interval: 15s
+
+gateway:
+  # -- Apache APISIX service type for user access itself
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+  annotations:
+    metallb.io/address-pool: ip-pool
+  loadBalancerIP: "10.0.0.80"
+  loadBalancerSourceRanges: []

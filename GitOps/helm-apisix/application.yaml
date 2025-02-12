@@ -12,7 +12,7 @@ spec:
     # 1. APISIX Core (etcd 비활성화 및 standalone 모드 설정은 values 파일에서 처리)
     - repoURL: https://charts.apiseven.com
       chart: apisix
-      targetRevision: 3.11.0-debian # APISIX 버전
+      targetRevision: 3.11.0 # APISIX Chart 버전
       helm:
         valueFiles:
           - $values/GitOps/helm-apisix/values/apisix.yaml # 커스텀 values 파일 경로

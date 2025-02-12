@@ -1,6 +1,18 @@
+replicaCount: 1
+
+image:
+  repository: apache/apisix-ingress-controller
+  pullPolicy: IfNotPresent
+  tag: "1.8.0"
+
+serviceMonitor:
+  enabled: true
+  namespace: "monitoring"
+  interval: 15s
+
 ingress-controller:
   enabled: true
   replicaCount: 2
   config:
     kubernetes:
-      watchNamespace: ""   # 모든 네임스페이스 감시
+      watchNamespace: "" # 모든 네임스페이스 감시

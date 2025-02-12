@@ -1,21 +1,30 @@
+image:
+  # -- Apache APISIX image repository
+  repository: apache/apisix
+  # -- Apache APISIX image pull policy
+  pullPolicy: IfNotPresent
+  # -- Apache APISIX image tag
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: 3.11.0-debian
+
 replicaCount: 1
-resources: {}              # 별도 리소스 제한 없이 기본값 사용
+resources: {} # 별도 리소스 제한 없이 기본값 사용
 autoscaling:
-  enabled: false           # 개발에서는 오토스케일링 미사용
+  enabled: false # 개발에서는 오토스케일링 미사용
 
 apisix:
   deployment:
-    mode: standalone       # etcd 없이 동작하는 standalone 모드
+    mode: standalone # etcd 없이 동작하는 standalone 모드
   admin:
     enabled: true
     ingress:
-      enabled: false       # 관리 API는 외부 노출하지 않음
+      enabled: false # 관리 API는 외부 노출하지 않음
 
 service:
-  type: NodePort            # 간단한 테스트를 위해 NodePort 사용
+  type: NodePort # 간단한 테스트를 위해 NodePort 사용
   http:
     servicePort: 80
     containerPort: 9080
 
 ingress:
-  enabled: false           # dev에서는 별도 ingress 사용하지 않음
+  enabled: false # dev에서는 별도 ingress 사용하지 않음

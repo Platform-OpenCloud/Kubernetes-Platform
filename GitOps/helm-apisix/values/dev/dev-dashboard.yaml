@@ -1,14 +1,53 @@
-dashboard:
-  enabled: true
-  service:
-    type: ClusterIP
-  ingress:
-    enabled: true
-    hosts:
-      - host: dashboard.example.com
-        paths:
-          - "/"
-    tls:
-      - hosts:
-          - dashboard.example.com
-        secretName: dashboard-tls
+replicaCount: 1
+
+image:
+  # -- Apache APISIX Dashboard image repository
+  repository: apache/apisix-dashboard
+  # -- Apache APISIX Dashboard image pull policy
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  # Apache APISIX Dashboard image tag (immutable tags are recommended)
+  tag: 3.0.0-alpine
+
+config:
+  schema:
+    # -- Overrides APISIX Dashboard schema.json
+    # by mounting configMap containing schema.json
+    configMap:
+      {}
+      # name: apisix-dashboard-schema
+      # key: schema.json
+  conf:
+    listen:
+      # -- The address on which the Manager API should listen.
+      # The default value is 0.0.0.0, if want to specify, please enable it.
+      # This value accepts IPv4, IPv6, and hostname.
+      host: 0.0.0.0
+      # -- The port on which the Manager API should listen.
+      port: 9000
+    log:
+      # -- Error log level.
+      # Supports levels, lower to higher: debug, info, warn, error, panic, fatal
+      errorLog:
+        level: warn
+        # -- Access log path
+        filePath: /dev/stderr
+      accessLog:
+        # -- Error log path
+        filePath: /dev/stdout
+    plugins: []
+  authentication:
+    # -- Secret for jwt token generation
+    secret: secret
+    # -- JWT token expire time, in second
+    expireTime: 3600
+    # -- Specifies username and password for login manager api.
+    users:
+      - username: admin
+        password: admin
+
+service:
+  # -- Service type
+  type: LodBalancer
+  # -- Service HTTP port
+  port: 80
