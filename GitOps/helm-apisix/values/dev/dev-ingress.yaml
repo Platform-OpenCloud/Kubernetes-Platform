@@ -11,7 +11,7 @@ image:
 
 config:
   apisix:
-    serviceName: apisix-admin
+    serviceName: apisix-deployment-admin
     serviceNamespace: ingress-apisix
     servicePort: 9180
     adminKey: "edd1c9f034335f136f87ad84b625c8f1"

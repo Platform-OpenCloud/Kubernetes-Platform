@@ -43,11 +43,6 @@ apisix:
       admin: edd1c9f034335f136f87ad84b625c8f1
       # -- Apache APISIX admin API viewer role credentials
       viewer: 4054f7cf07e344346cd3f287985e76a2
-      secretName: "apisix-admin"
-      # -- Name of the admin role key in the secret, overrides the default key name "admin"
-      secretAdminKey: "edd1c9f034335f136f87ad84b625c8f1"
-      # -- Name of the viewer role key in the secret, overrides the default key name "viewer"
-      secretViewerKey: "4054f7cf07e344346cd3f287985e76a2"
 
     allow:
       # -- The client IP CIDR allowed to access Apache APISIX Admin API service.
