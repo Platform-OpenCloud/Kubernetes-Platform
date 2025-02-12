@@ -33,7 +33,7 @@ spec:
           - $values/GitOps/helm-apisix/values/dashboard.yaml
           - $values/GitOps/helm-apisix/values/dev/dev-dashboard.yaml
 
-    - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform.git
+    - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
       targetRevision: develop
       ref: values
 
