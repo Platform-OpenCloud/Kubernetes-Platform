@@ -97,7 +97,7 @@ dashboard:
         password: ~
 
 ingress-controller:
-  enabled: true
+  enabled: false
   config:
     apisix:
       adminAPIVersion: "v3"
