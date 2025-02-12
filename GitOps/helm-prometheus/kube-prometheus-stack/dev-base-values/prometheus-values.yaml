@@ -8,13 +8,16 @@ prometheus:
     # 모든 ServiceMonitor 리소스를 기본적으로 선택 대상으로 포함합니다.
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorNamespaceSelector: {}
-      # matchExpressions:
-      #   - key: rook-ceph
-      #     operator: In
-      #     values: ["enabled"]
-      #   - key: name
-      #     operator: In
-      #     values: ["system-monitoring"]
+    # Prometheus 저장소 설정
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "longhorn"
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 20Gi # 필요에 따라 크기 조정
 
   service:
     type: NodePort

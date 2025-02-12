@@ -79,10 +79,10 @@ etcd:
   replicaCount: 3 # 클러스터 노드 수에 맞춰 조정
   persistence:
     storageClass: "longhorn" # Longhorn StorageClass 사용
-    size: 20Gi
+    size: 10Gi
 
 dashboard:
-  enabled: false
+  enabled: true
   config:
     conf:
       etcd:
