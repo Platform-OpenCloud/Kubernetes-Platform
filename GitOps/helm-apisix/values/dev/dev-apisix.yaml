@@ -76,7 +76,7 @@ ingress:
 
 etcd:
   enabled: true
-  replicaCount: 3 # 클러스터 노드 수에 맞춰 조정
+  replicaCount: 1 # 클러스터 노드 수에 맞춰 조정
   persistence:
     storageClass: "longhorn" # Longhorn StorageClass 사용
     size: 10Gi

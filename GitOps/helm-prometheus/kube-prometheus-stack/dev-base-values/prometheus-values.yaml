@@ -6,7 +6,7 @@ prometheus:
 
     # false로 설정하면, Helm 차트에 정의된 release라벨을 기준으로 ServiceMonitor를 필터링하지 않습니다.
     # 모든 ServiceMonitor 리소스를 기본적으로 선택 대상으로 포함합니다.
-    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: true
     serviceMonitorNamespaceSelector: {}
     # Prometheus 저장소 설정
     storageSpec:
