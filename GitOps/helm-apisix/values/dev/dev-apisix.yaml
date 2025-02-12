@@ -95,3 +95,9 @@ dashboard:
         username: ~
         # -- Specifies etcd basic auth password if enable etcd auth
         password: ~
+
+ingress-controller:
+  enabled: true
+  config:
+    apisix:
+      adminAPIVersion: "v3"
