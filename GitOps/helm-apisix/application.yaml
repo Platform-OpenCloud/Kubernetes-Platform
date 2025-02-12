@@ -20,7 +20,7 @@ spec:
     # 2. APISIX Ingress Controller
     - repoURL: https://charts.apiseven.com
       chart: apisix-ingress-controller
-      targetRevision: 1.14.0 # Ingress Controller Chart 버전
+      targetRevision: 0.14.0 # Ingress Controller Chart 버전
       helm:
         valueFiles:
           - values/GitOps/helm-apisix/values/ingress.yaml
