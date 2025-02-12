@@ -23,8 +23,9 @@ spec:
       targetRevision: 0.14.0 # Ingress Controller Chart 버전
       helm:
         valueFiles:
-          - values/GitOps/helm-apisix/values/ingress.yaml
-          - values/GitOps/helm-apisix/values/dev/dev-ingress.yaml
+          - $values/GitOps/helm-apisix/values/ingress.yaml
+          - $values/GitOps/helm-apisix/values/dev/dev-ingress.yaml
+    # 3. APISIX Dashboard
     - repoURL: https://charts.apiseven.com
       chart: apisix-dashboard
       targetRevision: 0.8.2 # Dashboard Chart 버전
