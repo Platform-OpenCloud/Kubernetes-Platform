@@ -5,7 +5,7 @@ image:
   pullPolicy: IfNotPresent
   # -- Apache APISIX image tag
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 3.11.0
+  tag: 3.11.0-debian
 
 replicaCount: 3
 resources:
