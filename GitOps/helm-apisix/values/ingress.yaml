@@ -7,7 +7,7 @@ image:
 
 serviceMonitor:
   enabled: true
-  namespace: "monitoring"
+  namespace: "system-monitoring"
   interval: 15s
 
 ingress-controller:

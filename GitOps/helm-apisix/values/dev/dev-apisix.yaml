@@ -35,11 +35,11 @@ apisix:
     port: 9180
     # -- Service port to use for Apache APISIX admin API
     servicePort: 9180
-    cors: true
+    cors: false
     ingress:
       enabled: true
       hosts:
-        - host: apisix-admin.example.com
+        - host: apisix-admin.ingress-apisix.svc.cluster.local
           paths:
             - "/apisix"
 
