@@ -68,3 +68,18 @@ etcd:
   persistence:
     storageClass: "longhorn" # Longhorn StorageClass 사용
     size: 20Gi
+
+dashboard:
+  enabled: false
+  config:
+    conf:
+      etcd:
+        # -- Supports defining multiple etcd host addresses for an etcd cluster
+        endpoints:
+          - apisix-etcd:2379
+        # -- apisix configurations prefix
+        prefix: "/apisix"
+        # -- Specifies etcd basic auth username if enable etcd auth
+        username: ~
+        # -- Specifies etcd basic auth password if enable etcd auth
+        password: ~

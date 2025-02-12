@@ -26,13 +26,13 @@ spec:
           - $values/GitOps/helm-apisix/values/ingress.yaml
           - $values/GitOps/helm-apisix/values/dev/dev-ingress.yaml
     # 3. APISIX Dashboard
-    - repoURL: https://charts.apiseven.com
-      chart: apisix-dashboard
-      targetRevision: 0.8.2 # Dashboard Chart 버전
-      helm:
-        valueFiles:
-          - $values/GitOps/helm-apisix/values/dashboard.yaml
-          - $values/GitOps/helm-apisix/values/dev/dev-dashboard.yaml
+    # - repoURL: https://charts.apiseven.com
+    #   chart: apisix-dashboard
+    #   targetRevision: 0.8.2 # Dashboard Chart 버전
+    #   helm:
+    #     valueFiles:
+    #       - $values/GitOps/helm-apisix/values/dashboard.yaml
+    #       - $values/GitOps/helm-apisix/values/dev/dev-dashboard.yaml
 
     - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
       targetRevision: develop
