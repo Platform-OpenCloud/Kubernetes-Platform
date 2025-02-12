@@ -3,13 +3,13 @@ alertmanager:
     type: NodePort
     nodePort: 30093
   alertmanagerSpec:
-  # Alertmanager 저장소 설정
-  storage:
-    volumeClaimTemplate:
-      spec:
-        storageClassName: "longhorn"
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 10Gi # 필요에 따라 크기 조정
+    # Alertmanager 저장소 설정
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "longhorn"
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Gi # 필요에 따라 크기 조정
