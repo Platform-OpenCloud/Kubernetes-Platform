@@ -14,7 +14,7 @@ autoscaling:
 
 apisix:
   deployment:
-    mode: standalone # etcd 없이 동작하는 standalone 모드
+    mode: traditional   # etcd 없이 동작하는 standalone 모드
   admin:
     enabled: true
     ingress:
