@@ -63,5 +63,8 @@ ingress:
       secretName: apisix-tls
 
 etcd:
-  # -- install etcd(v3) by default, set false if do not want to install etcd(v3) together
-  enabled: false
+  enabled: true
+  replicaCount: 3 # 클러스터 노드 수에 맞춰 조정
+  persistence:
+    storageClass: "longhorn" # Longhorn StorageClass 사용
+    size: 20Gi

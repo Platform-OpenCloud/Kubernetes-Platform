@@ -25,6 +25,16 @@ config:
       host: 0.0.0.0
       # -- The port on which the Manager API should listen.
       port: 9000
+    etcd:
+      # -- Supports defining multiple etcd host addresses for an etcd cluster
+      endpoints:
+        - apisix-etcd:2379
+      # -- apisix configurations prefix
+      prefix: "/apisix"
+      # -- Specifies etcd basic auth username if enable etcd auth
+      username: ~
+      # -- Specifies etcd basic auth password if enable etcd auth
+      password: ~
     log:
       # -- Error log level.
       # Supports levels, lower to higher: debug, info, warn, error, panic, fatal
