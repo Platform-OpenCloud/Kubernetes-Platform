@@ -28,6 +28,8 @@ metrics:
 apisix:
   deployment:
     mode: traditional # etcd 없이 standalone 모드 사용 (또는 필요 시 traditional 모드로 전환)
+    role: "traditional"
+
   admin:
     enabled: true
     ip: 0.0.0.0
@@ -41,6 +43,16 @@ apisix:
       admin: edd1c9f034335f136f87ad84b625c8f1
       # -- Apache APISIX admin API viewer role credentials
       viewer: 4054f7cf07e344346cd3f287985e76a2
+      secretName: "apisix-admin"
+      # -- Name of the admin role key in the secret, overrides the default key name "admin"
+      secretAdminKey: "edd1c9f034335f136f87ad84b625c8f1"
+      # -- Name of the viewer role key in the secret, overrides the default key name "viewer"
+      secretViewerKey: "4054f7cf07e344346cd3f287985e76a2"
+
+    allow:
+      # -- The client IP CIDR allowed to access Apache APISIX Admin API service.
+      ipList:
+        - 0.0.0.0/0
     ingress:
       enabled: true
       hosts:
