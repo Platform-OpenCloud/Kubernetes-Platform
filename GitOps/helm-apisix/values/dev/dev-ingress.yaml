@@ -18,8 +18,8 @@ config:
     adminAPIVersion: "v3"
 
 serviceMonitor:
-  enabled: false
-  namespace: "system-monitoring"
+  enabled: true
+  namespace: "ingress-apisix"
   interval: 15s
 
 gateway:

@@ -23,7 +23,7 @@ metrics:
     # -- Enable or disable Apache APISIX serviceMonitor
     enabled: true
     # -- namespace where the serviceMonitor is deployed, by default, it is the same as the namespace of the apisix
-    namespace: ""
+    namespace: "ingress-apisix"
 
 apisix:
   deployment:
