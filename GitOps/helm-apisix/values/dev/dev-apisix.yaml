@@ -50,7 +50,7 @@ apisix:
       ipList:
         - 0.0.0.0/0
     ingress:
-      enabled: true
+      enabled: false
       hosts:
         - host: apisix-admin.ingress-apisix.svc.cluster.local
           paths:
@@ -63,17 +63,6 @@ service:
     containerPort: 9080
   tls:
     servicePort: 443
-
-ingress:
-  enabled: true
-  hosts:
-    - host: apisix.example.com
-      paths:
-        - "/"
-  tls:
-    - hosts:
-        - apisix.example.com
-      secretName: apisix-tls
 
 etcd:
   enabled: true
