@@ -70,7 +70,7 @@ etcd:
     size: 10Gi
 
 dashboard:
-  enabled: true
+  enabled: false
   config:
     conf:
       etcd:
