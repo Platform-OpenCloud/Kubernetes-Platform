@@ -85,9 +85,7 @@ dashboard:
         password: ~
 
 ingress-controller:
-  enabled: true
+  enabled: false
   config:
     apisix:
-      serviceName: "apisix-deployment-gateway"
-      serviceNamespace: "ingress-apisix"
       adminAPIVersion: "v3"
