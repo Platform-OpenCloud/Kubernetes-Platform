@@ -22,11 +22,4 @@ serviceMonitor:
   namespace: "ingress-apisix"
   interval: 15s
 
-gateway:
-  # -- Apache APISIX service type for user access itself
-  type: LoadBalancer
-  externalTrafficPolicy: Cluster
-  annotations:
-    metallb.io/address-pool: ip-pool
-  loadBalancerIP: "10.0.0.80"
-  loadBalancerSourceRanges: []
+gateway: {}

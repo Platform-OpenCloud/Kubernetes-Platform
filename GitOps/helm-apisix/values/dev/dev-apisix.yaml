@@ -4,7 +4,6 @@ image:
   # -- Apache APISIX image pull policy
   pullPolicy: IfNotPresent
   # -- Apache APISIX image tag
-  # Overrides the image tag whose default is the chart appVersion.
   tag: 3.11.0-debian
 
 replicaCount: 3
@@ -20,7 +19,6 @@ timezone: "Asia/Seoul"
 
 metrics:
   serviceMonitor:
-    # -- Enable or disable Apache APISIX serviceMonitor
     enabled: true
     # -- namespace where the serviceMonitor is deployed, by default, it is the same as the namespace of the apisix
     namespace: "ingress-apisix"
@@ -29,7 +27,7 @@ metrics:
 apisix:
   deployment:
     mode: traditional # etcd 없이 standalone 모드 사용 (또는 필요 시 traditional 모드로 전환)
-    role: "traditional"
+    role: traditional
 
   admin:
     enabled: true
@@ -54,7 +52,7 @@ apisix:
       hosts:
         - host: apisix-admin.ingress-apisix.svc.cluster.local
           paths:
-            - "/apisix"
+            - /apisix
 
 service:
   type: LoadBalancer # 클라우드 환경 등 외부 로드밸런서 사용
