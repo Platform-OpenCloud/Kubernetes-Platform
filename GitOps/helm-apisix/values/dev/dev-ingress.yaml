@@ -21,5 +21,3 @@ serviceMonitor:
   enabled: true
   namespace: "ingress-apisix"
   interval: 15s
-
-gateway: {}
