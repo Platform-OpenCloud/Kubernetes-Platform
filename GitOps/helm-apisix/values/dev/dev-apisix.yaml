@@ -22,7 +22,6 @@ metrics:
     enabled: true
     # -- namespace where the serviceMonitor is deployed, by default, it is the same as the namespace of the apisix
     namespace: "ingress-apisix"
-    name: "apisix-metrics"
 
 apisix:
   deployment:
