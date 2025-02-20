@@ -1,5 +1,5 @@
 ---
-name: issue template
+name: Issue template
 about: issue
 title: "[Issue/#"
 labels: ''
