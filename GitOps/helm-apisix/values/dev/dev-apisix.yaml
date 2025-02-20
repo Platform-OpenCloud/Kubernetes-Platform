@@ -52,6 +52,15 @@ apisix:
         - host: apisix-admin.ingress-apisix.svc.cluster.local
           paths:
             - /apisix
+  prometheus:
+    # ref: https://apisix.apache.org/docs/apisix/plugins/prometheus/
+    enabled: true
+    # -- path of the metrics endpoint
+    path: /apisix/prometheus/metrics
+    # -- prefix of the metrics
+    metricPrefix: apisix_
+    # -- container port where the metrics are exposed
+    containerPort: 9091
 
 service:
   type: LoadBalancer # 클라우드 환경 등 외부 로드밸런서 사용
