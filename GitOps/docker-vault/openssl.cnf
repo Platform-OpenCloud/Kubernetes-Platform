@@ -1,0 +1,25 @@
+cat <<EOF > openssl.cnf
+[req]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+
+[req_distinguished_name]
+C = KR
+ST = Seoul
+L = Seoul
+O = KProLabs
+OU = IT
+CN = vault.kprolabs.space
+
+[v3_req]
+keyUsage = keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = vault.kprolabs.space
+DNS.2 = *.kprolabs.space
+IP.1 = 127.0.0.1
+IP.2 = 198.51.100.20
+EOF
