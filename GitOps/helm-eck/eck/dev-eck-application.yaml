@@ -10,6 +10,7 @@ spec:
       chart: eck-operator
       targetRevision: 2.16.1
       helm:
+        releaseName: elastic-operator
         valueFiles:
           - $values/GitOps/helm-eck/eck/dev-eck.yaml
     - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
