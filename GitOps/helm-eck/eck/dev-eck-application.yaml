@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadate:
+  name: eck-operator
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://helm.elastic.co
+      chart: eck-operator
+      targetRevision: 2.16.1
+      helm:
+        releaseName: elastic-operator
+        valueFiles:
+          - $values/GitOps/helm-eck/eck/dev-eck-values/eck-values.yaml
+    - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
+      targetRevision: develop
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: elastic-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

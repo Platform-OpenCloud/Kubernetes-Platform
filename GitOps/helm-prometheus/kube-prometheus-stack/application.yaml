@@ -6,23 +6,23 @@ metadata:
 spec:
   project: default
   sources:
-  - repoURL: https://prometheus-community.github.io/helm-charts
-    chart: kube-prometheus-stack
-    targetRevision: 68.3.0
-    helm:
-      valueFiles:
-      - $values/GitOps/helm-prometheus/kube-prometheus-stack/dev-base-values/prometheus-values.yaml
-      - $values/GitOps/helm-prometheus/kube-prometheus-stack/dev-base-values/grafana-values.yaml
-      - $values/GitOps/helm-prometheus/kube-prometheus-stack/dev-base-values/alertmanager-values.yaml
-  - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
-    targetRevision: develop
-    ref: values
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: 68.3.0
+      helm:
+        valueFiles:
+          - $values/GitOps/helm-prometheus/kube-prometheus-stack/dev-base-values/prometheus-values.yaml
+          - $values/GitOps/helm-prometheus/kube-prometheus-stack/dev-base-values/grafana-values.yaml
+          - $values/GitOps/helm-prometheus/kube-prometheus-stack/dev-base-values/alertmanager-values.yaml
+    - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
+      targetRevision: develop
+      ref: values
   destination:
     server: https://kubernetes.default.svc
     namespace: system-monitoring
   syncPolicy:
     syncOptions:
-    - ServerSideApply=true
+      - ServerSideApply=true
     automated:
       prune: true
       selfHeal: true
