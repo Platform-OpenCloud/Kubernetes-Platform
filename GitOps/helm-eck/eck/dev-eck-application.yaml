@@ -11,7 +11,7 @@ spec:
       targetRevision: 2.16.1
       helm:
         valueFiles:
-          - $values/GitOps/helm-eck/eck/dev-eck.yaml
+          - $values/GitOps/helm-eck/eck/dev/dev-eck.yaml
     - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
       targetRevision: develop
       ref: values
