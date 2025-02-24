@@ -12,7 +12,7 @@ spec:
       helm:
         releaseName: elastic-operator
         valueFiles:
-          - $values/GitOps/helm-eck/eck/dev-eck-values/eck-values.yaml
+          - $values/GitOps/helm-eck/eck/dev-eck.yaml
     - repoURL: https://github.com/Platform-OpenCloud/Kubernetes-Platform
       targetRevision: develop
       ref: values
