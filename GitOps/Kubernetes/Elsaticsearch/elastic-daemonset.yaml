@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: max-map-count-setter
+  namespace: elastic-system
+  labels:
+    k8s-app: max-map-count-setter
+spec:
+  selector:
+    matchLabels:
+      name: max-map-count-setter
+  template:
+    metadata:
+      labels:
+        name: max-map-count-setter
+    spec:
+      hostNetwork: true
+      hostPID: true
+      tolerations:
+        - effect: NoSchedule
+          operator: Exists
+        - effect: NoExecute
+          operator: Exists
+      initContainers:
+        - name: set-vm-max-map-count
+          image: busybox
+          command: ["sysctl", "-w", "vm.max_map_count=262144"]
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "100Mi"
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+      containers:
+        - name: pause
+          image: gcr.io/google-containers/pause:3.2
+          resources:
+            limits:
+              cpu: "50m"
+              memory: "50Mi"
+            requests:
+              cpu: "50m"
+              memory: "50Mi"
