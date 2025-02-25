@@ -1,3 +1,5 @@
+managedNamespaces: ["elastic-stack"]
+
 serviceMonitor:
   enabled: true
   namespace: elastic-system
