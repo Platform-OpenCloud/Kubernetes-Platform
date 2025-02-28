@@ -19,10 +19,12 @@ persistence:
   reclaimPolicy: Delete # PV 정책 설정
 
 defaultSettings:
+  replicaAutoBalance: best-effort
+  replicaAutoBalanceDiskPressureThreshold: 75
+  storageMinimalAvailablePercentage: 20
   allowRecurringJobWhileVolumeDetached: false
   defaultDataPath: /var/lib/longhorn
   defaultDataLocality: best-effort
-  replicaAutoBalance: best-effort
 
 # defaultBackupStore:
 #   # -- Endpoint used to access the default backupstore. (Options: "NFS", "CIFS", "AWS", "GCP", "AZURE")
