@@ -1,6 +1,8 @@
+# Project Overview
 
-# 디렉토리 구조
-```
+## Directory Structure
+
+```yaml
 Kubernetes-Platform
 ├─ .env
 ├─ app

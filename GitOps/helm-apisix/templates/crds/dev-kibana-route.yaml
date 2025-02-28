@@ -1,0 +1,23 @@
+apiVersion: apisix.apache.org/v2
+kind: ApisixRoute
+metadata:
+  name: kibana-route
+spec:
+  http:
+  - name: kibana-ingress
+    match:
+      hosts:
+      - dev-kibana.kprolabs.space
+      paths:
+      - /*
+    backends:
+    - serviceName: dev-kibana  # Kibana 서비스 이름
+      servicePort: 5601
+      resolveGranularity: service
+      scheme: https  # HTTPS 백엔드 연결
+    plugins:
+    - name: proxy-rewrite
+      enable: true
+      config:
+        headers:
+          X-Forwarded-Proto: https
