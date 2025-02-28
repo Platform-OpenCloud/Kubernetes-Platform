@@ -7,21 +7,22 @@ preUpgradeChecker:
 service:
   ui:
     type: NodePort
-    nodePort: 30050  # 수동 포트 지정
+    nodePort: 30050 # 수동 포트 지정
   manager:
-    type: ClusterIP  # 필수 유지
+    type: ClusterIP # 필수 유지
 
 persistence:
   defaultClass: true
   # Longhorn 볼륨은 가상 블록 디바이스 상에 생성되므로 노드의 기본 파일시스템과 완전히 분리되어 동작
   defaultFsType: ext4
   defaultClassReplicaCount: 2
-  reclaimPolicy: Delete  # PV 정책 설정
+  reclaimPolicy: Delete # PV 정책 설정
 
 defaultSettings:
   allowRecurringJobWhileVolumeDetached: false
   defaultDataPath: /var/lib/longhorn
-  defaultDataLocality: "best-effort"
+  defaultDataLocality: best-effort
+  replicaAutoBalance: best-effort
 
 # defaultBackupStore:
 #   # -- Endpoint used to access the default backupstore. (Options: "NFS", "CIFS", "AWS", "GCP", "AZURE")
