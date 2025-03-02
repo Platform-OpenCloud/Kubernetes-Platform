@@ -7,9 +7,9 @@ preUpgradeChecker:
 service:
   ui:
     type: NodePort
-    nodePort: 30050 # 수동 포트 지정
+    nodePort: 30050
   manager:
-    type: ClusterIP # 필수 유지
+    type: ClusterIP
 
 persistence:
   defaultClass: true
@@ -19,9 +19,14 @@ persistence:
   reclaimPolicy: Delete # PV 정책 설정
 
 defaultSettings:
-  replicaAutoBalance: best-effort
-  replicaAutoBalanceDiskPressureThreshold: 75
-  storageMinimalAvailablePercentage: 20
+  # 레플리카 균형 및 분산 관련 설정
+  replicaAutoBalance: "best-effort"
+  replicaAutoBalanceDiskPressureThreshold: "75"
+  storageMinimalAvailablePercentage: "20"
+  replicaNodeLevelSoftAntiAffinity: "false" # 추가: 동일 노드 복제본 생성 방지
+  replicaZoneLevelSoftAntiAffinity: "true" # 추가: 존 레벨 분산 허용
+
+  # 데이터 지역성 및 기타 설정
   allowRecurringJobWhileVolumeDetached: false
   defaultDataPath: /var/lib/longhorn
   defaultDataLocality: best-effort
