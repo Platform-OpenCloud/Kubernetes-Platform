@@ -1,9 +1,5 @@
 apiVersion: kibana.k8s.elastic.co/v1
 kind: Kibana
-config:
-  xpack.fleet.packages:
-    - name: apm
-      version: 8.17.3
 metadata:
   name: dev-kibana
 spec:
@@ -11,6 +7,10 @@ spec:
   count: 1
   elasticsearchRef:
     name: dev-elasticsearch
+  config:
+    xpack.fleet.packages:
+      - name: apm
+        version: 8.17.3
   http:
     service:
       spec:
