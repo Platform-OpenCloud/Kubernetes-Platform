@@ -1,5 +1,10 @@
 managedNamespaces: ["elastic-stack"]
 
+config:
+  metrics:
+    secureMode:
+      enabled: true # RBAC 자동 구성
+
 serviceMonitor:
   enabled: true
   namespace: elastic-system
