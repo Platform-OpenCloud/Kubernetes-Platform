@@ -1,0 +1,12 @@
+apiVersion: apm.k8s.elastic.co/v1
+kind: ApmServer
+metadata:
+  name: dev-apm-server
+  namespace: elastic-stack
+spec:
+  version: 8.17.3
+  count: 1
+  elasticsearchRef:
+    name: dev-elasticsearch
+  kibanaRef: 
+    name: dev-kibana

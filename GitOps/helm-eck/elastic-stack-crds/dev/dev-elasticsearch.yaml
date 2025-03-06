@@ -4,7 +4,7 @@ metadata:
   name: dev-elasticsearch
   namespace: elastic-stack
 spec:
-  version: "8.17.2"
+  version: 8.17.3
   nodeSets:
     - name: masters
       count: 1
