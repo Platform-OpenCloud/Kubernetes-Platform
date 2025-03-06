@@ -2,6 +2,7 @@ managedNamespaces: ["elastic-stack"]
 
 config:
   metrics:
+    port: 9090
     secureMode:
       enabled: true # RBAC 자동 구성
 
