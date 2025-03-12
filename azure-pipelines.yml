@@ -2,6 +2,8 @@ trigger:
   branches:
     include:
       - develop
+    exclude:
+      - feat*
   paths:
     exclude:
       - "GitOps/*" # GitOps 디렉토리 변경은 트리거에서 제외
@@ -27,7 +29,7 @@ stages:
           # Python 환경 설정
           - task: UsePythonVersion@0
             inputs:
-              versionSpec: "3.12.9"
+              versionSpec: "3.12"
 
           # Poetry 설치 및 의존성 설치
           - script: |
