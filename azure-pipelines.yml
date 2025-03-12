@@ -10,17 +10,7 @@ variables:
   - name: imageTag
     value: "$(Build.BuildId)"
   - group: "Host_Address"
-  - name: SAM_IP
-    value: "$(SAM_IP)"
-  - name: SAM_PW
-    value: "$(SAM_PW)"
   - group: "Docker"
-  - name: Docker_Password
-    value: "$(Docker_Password)"
-  - name: Docker_ID
-    value: "$(Docker_ID)"
-  - name: Docker_Hub
-    value: "$(Docker_Hub)"
 
 stages:
   # ====================================
