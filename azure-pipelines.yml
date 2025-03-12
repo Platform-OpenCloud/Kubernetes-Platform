@@ -7,19 +7,20 @@ trigger:
       - "GitOps/*" # GitOps 디렉토리 변경은 트리거에서 제외
 
 variables:
-  dockerHubUsername: "skwwnl"
-  dockerHubRepository: "kubernetes-platform"
+  - name: imageTag
+    value: "$(Build.BuildId)"
   - group: "Host_Address"
-  - name: "SAM_IP"
+  - name: SAM_IP
     value: "$(SAM_IP)"
-  - name: "SAM_PW"
+  - name: SAM_PW
     value: "$(SAM_PW)"
   - group: "Docker"
-  - name: "Docker_Password"
+  - name: Docker_Password
     value: "$(Docker_Password)"
-  - name: "Docker_ID"
+  - name: Docker_ID
     value: "$(Docker_ID)"
-  imageTag: "$(Build.BuildId)"
+  - name: Docker_Hub
+    value: "$(Docker_Hub)"
 
 stages:
   # ====================================
@@ -55,7 +56,7 @@ stages:
             displayName: "Docker Build & Push"
             inputs:
               command: buildAndPush
-              repository: $(Docker_ID)/$(dockerHubRepository)
+              repository: $(Docker_ID)/$(Docker_Hub)
               dockerfile: "$(Build.SourcesDirectory)/Dockerfile"
               containerRegistry: "dockerhub-connection"
               tags: |
@@ -83,13 +84,13 @@ stages:
                     sudo apt-get install -y sshpass
                     sshpass -p "$(SAM_PW)" ssh -o StrictHostKeyChecking=no user@$(SAM_IP) << EOF
                       echo "$(Docker_Password)" | docker login --username $(Docker_ID) --password-stdin
-                      docker pull $(Docker_ID)/$(dockerHubRepository):$(imageTag)
+                      docker pull $(Docker_ID)/$(Docker_Hub):$(imageTag)
                       docker stop fastapi_app || true
                       docker rm fastapi_app || true
                       docker run -d \
                         --name fastapi_app \
                         --env-file .env \
                         -p 80:80 \
-                        $(Docker_ID)/$(dockerHubRepository):$(imageTag)
+                        $(Docker_ID)/$(Docker_Hub):$(imageTag)
                     EOF
                   displayName: "Deploy via SSH"
