@@ -32,7 +32,7 @@ stages:
       - job: BuildTestPush
         displayName: "Build, Test, and Push Docker Image"
         pool:
-          vmImage: "ubuntu-latest"
+          name: Default
         steps:
           # Python 환경 설정
           - task: UsePythonVersion@0
@@ -74,7 +74,7 @@ stages:
         displayName: "Deploy to Remote Server"
         environment: Kubernetes-Platform # Azure DevOps 환경 설정 (선택사항)
         pool:
-          vmImage: "ubuntu-latest"
+          name: Default
         strategy:
           runOnce:
             deploy:
