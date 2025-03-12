@@ -72,6 +72,7 @@ stages:
     jobs:
       - deployment: DeployToServer
         displayName: "Deploy to Remote Server"
+        environment: Kubernetes-Platform # Azure DevOps 환경 설정 (선택사항)
         pool:
           vmImage: "ubuntu-latest"
         strategy:
