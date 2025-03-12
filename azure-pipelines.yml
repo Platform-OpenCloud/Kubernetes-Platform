@@ -1,9 +1,9 @@
-trigger:
+trigger: none
+
+pr:
   branches:
     include:
       - develop
-    exclude:
-      - feat*
   paths:
     exclude:
       - "GitOps/*" # GitOps 디렉토리 변경은 트리거에서 제외
@@ -26,18 +26,38 @@ stages:
         pool:
           name: Default
         steps:
-          # Python 환경 설정
-          - task: UsePythonVersion@0
-            inputs:
-              versionSpec: "3.12"
+          - script: |
+              # 필요한 의존성 설치
+              sudo apt-get update
+              sudo apt-get install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
+
+              # Python 3.12.9 소스코드 다운로드 (출시 후 사용 가능)
+              wget https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tgz
+              tar -xf Python-3.12.9.tgz
+              cd Python-3.12.9
+
+              # 컴파일 및 설치
+              ./configure --enable-optimizations
+              make -j $(nproc)
+              sudo make altinstall
+
+              # 버전 확인
+              python3.12 --version
+
+              # pip 업그레이드
+              python3.12 -m pip install --upgrade pip
+
+              # Poetry 설치
+              python3.12 -m pip install poetry
 
           # Poetry 설치 및 의존성 설치
           - script: |
-              pip install poetry
+              curl -sSL https://install.python-poetry.org | python3 -
+              export PATH="$HOME/.local/bin:$PATH"
+              poetry --version
               poetry config virtualenvs.create false
               poetry install --no-interaction --no-ansi --no-root
-            displayName: "Install dependencies with Poetry"
-
+            displayName: "Install Poetry and Dependencies"
           # Unit Test 수행 (pytest)
           - script: |
               poetry run pytest app/tests/
