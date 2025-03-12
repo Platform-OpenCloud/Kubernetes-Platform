@@ -1,29 +1,95 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
-- develop
-
-resources:
-- repo: self
+  branches:
+    include:
+      - develop
+  paths:
+    exclude:
+      - "GitOps/*" # GitOps 디렉토리 변경은 트리거에서 제외
 
 variables:
-  tag: '$(Build.BuildId)'
+  dockerHubUsername: "skwwnl"
+  dockerHubRepository: "kubernetes-platform"
+  - group: "Host_Address"
+  - name: "SAM_IP"
+    value: "$(SAM_IP)"
+  - name: "SAM_PW"
+    value: "$(SAM_PW)"
+  - group: "Docker"
+  - name: "Docker_Password"
+    value: "$(Docker_Password)"
+  - name: "Docker_ID"
+    value: "$(Docker_ID)"
+  imageTag: "$(Build.BuildId)"
 
 stages:
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
+  # ====================================
+  # 🔧 Continuous Integration (CI) Stage
+  # ====================================
+  - stage: CI
+    displayName: "Continuous Integration"
+    jobs:
+      - job: BuildTestPush
+        displayName: "Build, Test, and Push Docker Image"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          # Python 환경 설정
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: "3.12.9"
+
+          # Poetry 설치 및 의존성 설치
+          - script: |
+              pip install poetry
+              poetry config virtualenvs.create false
+              poetry install --no-interaction --no-ansi --no-root
+            displayName: "Install dependencies with Poetry"
+
+          # Unit Test 수행 (pytest)
+          - script: |
+              poetry run pytest app/tests/
+            displayName: "Run Unit Tests"
+
+          # Docker 이미지 빌드 및 Docker Hub Push
+          - task: Docker@2
+            displayName: "Docker Build & Push"
+            inputs:
+              command: buildAndPush
+              repository: $(Docker_ID)/$(dockerHubRepository)
+              dockerfile: "$(Build.SourcesDirectory)/Dockerfile"
+              containerRegistry: "dockerhub-connection"
+              tags: |
+                $(imageTag)
+
+  # ====================================
+  # 🚀 Continuous Deployment (CD) Stage
+  # ====================================
+  - stage: CD
+    displayName: "Continuous Deployment"
+    dependsOn: CI
+    condition: succeeded()
+    jobs:
+      - deployment: DeployToServer
+        displayName: "Deploy to Remote Server"
+        environment: dev # Azure DevOps 환경 설정 (선택사항)
+        pool:
+          vmImage: "ubuntu-latest"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                # SSH로 서버에 접속하여 배포 수행
+                - script: |
+                    sudo apt-get install -y sshpass
+                    sshpass -p "$(SAM_PW)" ssh -o StrictHostKeyChecking=no user@$(SAM_IP) << EOF
+                      echo "$(Docker_Password)" | docker login --username $(Docker_ID) --password-stdin
+                      docker pull $(Docker_ID)/$(dockerHubRepository):$(imageTag)
+                      docker stop fastapi_app || true
+                      docker rm fastapi_app || true
+                      docker run -d \
+                        --name fastapi_app \
+                        --env-file .env \
+                        -p 80:80 \
+                        $(Docker_ID)/$(dockerHubRepository):$(imageTag)
+                    EOF
+                  displayName: "Deploy via SSH"
