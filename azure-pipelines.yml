@@ -72,7 +72,6 @@ stages:
     jobs:
       - deployment: DeployToServer
         displayName: "Deploy to Remote Server"
-        environment: dev # Azure DevOps 환경 설정 (선택사항)
         pool:
           vmImage: "ubuntu-latest"
         strategy:
