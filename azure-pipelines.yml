@@ -1,9 +1,9 @@
-trigger:
+trigger: none
+
+pr:
   branches:
     include:
       - develop
-    exclude:
-      - feat*
   paths:
     exclude:
       - "GitOps/*" # GitOps 디렉토리 변경은 트리거에서 제외
@@ -26,18 +26,20 @@ stages:
         pool:
           name: Default
         steps:
-          # Python 환경 설정
-          - task: UsePythonVersion@0
-            inputs:
-              versionSpec: "3.12"
+          # 에이전트에 이미 설치된 Python 3.12.3 사용
+          - script: |
+              python3 --version
+              which python3
+            displayName: "Verify Python Installation"
 
           # Poetry 설치 및 의존성 설치
           - script: |
-              pip install poetry
+              curl -sSL https://install.python-poetry.org | python3 -
+              export PATH="$HOME/.local/bin:$PATH"
+              poetry --version
               poetry config virtualenvs.create false
               poetry install --no-interaction --no-ansi --no-root
-            displayName: "Install dependencies with Poetry"
-
+            displayName: "Install Poetry and Dependencies"
           # Unit Test 수행 (pytest)
           - script: |
               poetry run pytest app/tests/
